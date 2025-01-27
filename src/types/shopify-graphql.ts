@@ -8939,28 +8939,146 @@ export type CreateCartMutation = {
   } | null;
 };
 
-export type GetMetaObjectQueryVariables = Exact<{
-  type: Scalars["String"]["input"];
-}>;
+export type GetCollectionsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetMetaObjectQuery = {
+export type GetCollectionsQuery = {
   __typename?: "QueryRoot";
-  metaobjects: {
-    __typename?: "MetaobjectConnection";
+  collections: {
+    __typename?: "CollectionConnection";
     edges: Array<{
-      __typename?: "MetaobjectEdge";
+      __typename?: "CollectionEdge";
       node: {
-        __typename?: "Metaobject";
+        __typename?: "Collection";
         id: string;
         handle: string;
-        fields: Array<{
-          __typename?: "MetaobjectField";
-          key: string;
-          value?: string | null;
-        }>;
+        title: string;
+        description: string;
+        descriptionHtml: any;
+        image?: {
+          __typename?: "Image";
+          url: any;
+          width?: number | null;
+          height?: number | null;
+          altText?: string | null;
+        } | null;
       };
     }>;
   };
+};
+
+export type GetCollectionByHandleQueryVariables = Exact<{
+  handle: Scalars["String"]["input"];
+  first: Scalars["Int"]["input"];
+  after?: InputMaybe<Scalars["String"]["input"]>;
+  sortKey?: InputMaybe<ProductCollectionSortKeys>;
+  reverse?: InputMaybe<Scalars["Boolean"]["input"]>;
+  filters?: InputMaybe<Array<ProductFilter> | ProductFilter>;
+}>;
+
+export type GetCollectionByHandleQuery = {
+  __typename?: "QueryRoot";
+  collection?: {
+    __typename?: "Collection";
+    id: string;
+    handle: string;
+    title: string;
+    description: string;
+    descriptionHtml: any;
+    products: {
+      __typename?: "ProductConnection";
+      edges: Array<{
+        __typename?: "ProductEdge";
+        cursor: string;
+        node: {
+          __typename?: "Product";
+          id: string;
+          title: string;
+          vendor: string;
+          handle: string;
+          priceRange: {
+            __typename?: "ProductPriceRange";
+            minVariantPrice: {
+              __typename?: "MoneyV2";
+              amount: any;
+              currencyCode: CurrencyCode;
+            };
+            maxVariantPrice: {
+              __typename?: "MoneyV2";
+              amount: any;
+              currencyCode: CurrencyCode;
+            };
+          };
+          compareAtPriceRange: {
+            __typename?: "ProductPriceRange";
+            minVariantPrice: {
+              __typename?: "MoneyV2";
+              amount: any;
+              currencyCode: CurrencyCode;
+            };
+            maxVariantPrice: {
+              __typename?: "MoneyV2";
+              amount: any;
+              currencyCode: CurrencyCode;
+            };
+          };
+          images: {
+            __typename?: "ImageConnection";
+            edges: Array<{
+              __typename?: "ImageEdge";
+              node: { __typename?: "Image"; url: any; altText?: string | null };
+            }>;
+          };
+          featuredImage?: { __typename?: "Image"; url: any } | null;
+          options: Array<{
+            __typename?: "ProductOption";
+            name: string;
+            optionValues: Array<{
+              __typename?: "ProductOptionValue";
+              id: string;
+              name: string;
+              swatch?: {
+                __typename?: "ProductOptionValueSwatch";
+                color?: any | null;
+              } | null;
+            }>;
+          }>;
+          variants: {
+            __typename?: "ProductVariantConnection";
+            edges: Array<{
+              __typename?: "ProductVariantEdge";
+              node: {
+                __typename?: "ProductVariant";
+                id: string;
+                availableForSale: boolean;
+                compareAtPrice?: {
+                  __typename?: "MoneyV2";
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                } | null;
+                price: {
+                  __typename?: "MoneyV2";
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+                selectedOptions: Array<{
+                  __typename?: "SelectedOption";
+                  name: string;
+                  value: string;
+                }>;
+              };
+            }>;
+          };
+        };
+      }>;
+      pageInfo: {
+        __typename?: "PageInfo";
+        hasNextPage: boolean;
+        endCursor?: string | null;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+      };
+    };
+  } | null;
 };
 
 export type GetProductByHandleQueryVariables = Exact<{
@@ -8978,13 +9096,6 @@ export type GetProductByHandleQuery = {
     productType: string;
     tags: Array<string>;
     vendor: string;
-    collections: {
-      __typename?: "CollectionConnection";
-      edges: Array<{
-        __typename?: "CollectionEdge";
-        node: { __typename?: "Collection"; id: string; title: string };
-      }>;
-    };
     featuredImage?: {
       __typename?: "Image";
       url: any;
@@ -9066,196 +9177,6 @@ export type GetProductByHandleQuery = {
       description?: string | null;
     };
   } | null;
-};
-
-export type GetCollectionByIdQueryVariables = Exact<{
-  id: Scalars["ID"]["input"];
-  first: Scalars["Int"]["input"];
-  after?: InputMaybe<Scalars["String"]["input"]>;
-  sortKey?: InputMaybe<ProductCollectionSortKeys>;
-  reverse?: InputMaybe<Scalars["Boolean"]["input"]>;
-  filters?: InputMaybe<Array<ProductFilter> | ProductFilter>;
-}>;
-
-export type GetCollectionByIdQuery = {
-  __typename?: "QueryRoot";
-  collection?: {
-    __typename?: "Collection";
-    products: {
-      __typename?: "ProductConnection";
-      edges: Array<{
-        __typename?: "ProductEdge";
-        cursor: string;
-        node: {
-          __typename?: "Product";
-          id: string;
-          title: string;
-          vendor: string;
-          handle: string;
-          priceRange: {
-            __typename?: "ProductPriceRange";
-            minVariantPrice: {
-              __typename?: "MoneyV2";
-              amount: any;
-              currencyCode: CurrencyCode;
-            };
-          };
-          compareAtPriceRange: {
-            __typename?: "ProductPriceRange";
-            minVariantPrice: {
-              __typename?: "MoneyV2";
-              amount: any;
-              currencyCode: CurrencyCode;
-            };
-          };
-          images: {
-            __typename?: "ImageConnection";
-            edges: Array<{
-              __typename?: "ImageEdge";
-              node: { __typename?: "Image"; url: any; altText?: string | null };
-            }>;
-          };
-          featuredImage?: { __typename?: "Image"; url: any } | null;
-          options: Array<{
-            __typename?: "ProductOption";
-            name: string;
-            optionValues: Array<{
-              __typename?: "ProductOptionValue";
-              id: string;
-              name: string;
-              swatch?: {
-                __typename?: "ProductOptionValueSwatch";
-                color?: any | null;
-              } | null;
-            }>;
-          }>;
-          variants: {
-            __typename?: "ProductVariantConnection";
-            edges: Array<{
-              __typename?: "ProductVariantEdge";
-              node: {
-                __typename?: "ProductVariant";
-                id: string;
-                availableForSale: boolean;
-                compareAtPrice?: {
-                  __typename?: "MoneyV2";
-                  amount: any;
-                  currencyCode: CurrencyCode;
-                } | null;
-                price: {
-                  __typename?: "MoneyV2";
-                  amount: any;
-                  currencyCode: CurrencyCode;
-                };
-                selectedOptions: Array<{
-                  __typename?: "SelectedOption";
-                  name: string;
-                  value: string;
-                }>;
-              };
-            }>;
-          };
-        };
-      }>;
-      pageInfo: {
-        __typename?: "PageInfo";
-        hasNextPage: boolean;
-        endCursor?: string | null;
-        hasPreviousPage: boolean;
-        startCursor?: string | null;
-      };
-    };
-  } | null;
-};
-
-export type GetProductsByIdsQueryVariables = Exact<{
-  ids: Array<Scalars["ID"]["input"]> | Scalars["ID"]["input"];
-}>;
-
-export type GetProductsByIdsQuery = {
-  __typename?: "QueryRoot";
-  nodes: Array<
-    | { __typename?: "AppliedGiftCard" }
-    | { __typename?: "Article" }
-    | { __typename?: "Blog" }
-    | { __typename?: "Cart" }
-    | { __typename?: "CartLine" }
-    | { __typename?: "Collection" }
-    | { __typename?: "Comment" }
-    | { __typename?: "Company" }
-    | { __typename?: "CompanyContact" }
-    | { __typename?: "CompanyLocation" }
-    | { __typename?: "ComponentizableCartLine" }
-    | { __typename?: "ExternalVideo" }
-    | { __typename?: "GenericFile" }
-    | { __typename?: "Location" }
-    | { __typename?: "MailingAddress" }
-    | { __typename?: "Market" }
-    | { __typename?: "MediaImage" }
-    | { __typename?: "MediaPresentation" }
-    | { __typename?: "Menu" }
-    | { __typename?: "MenuItem" }
-    | { __typename?: "Metafield" }
-    | { __typename?: "Metaobject" }
-    | { __typename?: "Model3d" }
-    | { __typename?: "Order" }
-    | { __typename?: "Page" }
-    | {
-        __typename?: "Product";
-        id: string;
-        title: string;
-        handle: string;
-        priceRange: {
-          __typename?: "ProductPriceRange";
-          minVariantPrice: {
-            __typename?: "MoneyV2";
-            amount: any;
-            currencyCode: CurrencyCode;
-          };
-        };
-        compareAtPriceRange: {
-          __typename?: "ProductPriceRange";
-          minVariantPrice: {
-            __typename?: "MoneyV2";
-            amount: any;
-            currencyCode: CurrencyCode;
-          };
-        };
-        images: {
-          __typename?: "ImageConnection";
-          edges: Array<{
-            __typename?: "ImageEdge";
-            node: { __typename?: "Image"; url: any; altText?: string | null };
-          }>;
-        };
-        featuredImage?: { __typename?: "Image"; url: any } | null;
-        options: Array<{
-          __typename?: "ProductOption";
-          name: string;
-          optionValues: Array<{
-            __typename?: "ProductOptionValue";
-            id: string;
-            name: string;
-            swatch?: {
-              __typename?: "ProductOptionValueSwatch";
-              color?: any | null;
-            } | null;
-          }>;
-        }>;
-      }
-    | { __typename?: "ProductOption" }
-    | { __typename?: "ProductOptionValue" }
-    | { __typename?: "ProductVariant" }
-    | { __typename?: "Shop" }
-    | { __typename?: "ShopPayInstallmentsFinancingPlan" }
-    | { __typename?: "ShopPayInstallmentsFinancingPlanTerm" }
-    | { __typename?: "ShopPayInstallmentsProductVariantPricing" }
-    | { __typename?: "ShopPolicy" }
-    | { __typename?: "TaxonomyCategory" }
-    | { __typename?: "UrlRedirect" }
-    | { __typename?: "Video" }
-    | null
-  >;
 };
 
 export type CustomerUpdateMutationVariables = Exact<{
@@ -9737,16 +9658,21 @@ export const useCreateCartMutation = <TError = unknown, TContext = unknown>(
   );
 };
 
-export const GetMetaObjectDocument = `
-    query getMetaObject($type: String!) {
-  metaobjects(type: $type, first: 250) {
+export const GetCollectionsDocument = `
+    query GetCollections {
+  collections(first: 100) {
     edges {
       node {
         id
         handle
-        fields {
-          key
-          value
+        title
+        description
+        descriptionHtml
+        image {
+          url
+          width
+          height
+          altText
         }
       }
     }
@@ -9754,17 +9680,132 @@ export const GetMetaObjectDocument = `
 }
     `;
 
-export const useGetMetaObjectQuery = <
-  TData = GetMetaObjectQuery,
+export const useGetCollectionsQuery = <
+  TData = GetCollectionsQuery,
   TError = unknown
 >(
-  variables: GetMetaObjectQueryVariables,
-  options?: UseQueryOptions<GetMetaObjectQuery, TError, TData>
+  variables?: GetCollectionsQueryVariables,
+  options?: UseQueryOptions<GetCollectionsQuery, TError, TData>
 ) => {
-  return useQuery<GetMetaObjectQuery, TError, TData>(
-    ["getMetaObject", variables],
-    fetcher<GetMetaObjectQuery, GetMetaObjectQueryVariables>(
-      GetMetaObjectDocument,
+  return useQuery<GetCollectionsQuery, TError, TData>(
+    variables === undefined
+      ? ["GetCollections"]
+      : ["GetCollections", variables],
+    fetcher<GetCollectionsQuery, GetCollectionsQueryVariables>(
+      GetCollectionsDocument,
+      variables
+    ),
+    options
+  );
+};
+
+export const GetCollectionByHandleDocument = `
+    query GetCollectionByHandle($handle: String!, $first: Int!, $after: String, $sortKey: ProductCollectionSortKeys, $reverse: Boolean, $filters: [ProductFilter!]) {
+  collection(handle: $handle) {
+    id
+    handle
+    title
+    description
+    descriptionHtml
+    products(
+      first: $first
+      after: $after
+      sortKey: $sortKey
+      reverse: $reverse
+      filters: $filters
+    ) {
+      edges {
+        node {
+          id
+          title
+          vendor
+          handle
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          compareAtPriceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          images(first: 2) {
+            edges {
+              node {
+                url
+                altText
+              }
+            }
+          }
+          featuredImage {
+            url
+          }
+          options {
+            name
+            optionValues {
+              id
+              name
+              swatch {
+                color
+              }
+            }
+          }
+          variants(first: 100) {
+            edges {
+              node {
+                id
+                availableForSale
+                compareAtPrice {
+                  amount
+                  currencyCode
+                }
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+        hasPreviousPage
+        startCursor
+      }
+    }
+  }
+}
+    `;
+
+export const useGetCollectionByHandleQuery = <
+  TData = GetCollectionByHandleQuery,
+  TError = unknown
+>(
+  variables: GetCollectionByHandleQueryVariables,
+  options?: UseQueryOptions<GetCollectionByHandleQuery, TError, TData>
+) => {
+  return useQuery<GetCollectionByHandleQuery, TError, TData>(
+    ["GetCollectionByHandle", variables],
+    fetcher<GetCollectionByHandleQuery, GetCollectionByHandleQueryVariables>(
+      GetCollectionByHandleDocument,
       variables
     ),
     options
@@ -9774,14 +9815,6 @@ export const useGetMetaObjectQuery = <
 export const GetProductByHandleDocument = `
     query GetProductByHandle($handle: String!) {
   product(handle: $handle) {
-    collections(first: 100) {
-      edges {
-        node {
-          id
-          title
-        }
-      }
-    }
     id
     title
     description
@@ -9866,168 +9899,6 @@ export const useGetProductByHandleQuery = <
     ["GetProductByHandle", variables],
     fetcher<GetProductByHandleQuery, GetProductByHandleQueryVariables>(
       GetProductByHandleDocument,
-      variables
-    ),
-    options
-  );
-};
-
-export const GetCollectionByIdDocument = `
-    query GetCollectionById($id: ID!, $first: Int!, $after: String, $sortKey: ProductCollectionSortKeys, $reverse: Boolean, $filters: [ProductFilter!]) {
-  collection(id: $id) {
-    products(
-      first: $first
-      after: $after
-      sortKey: $sortKey
-      reverse: $reverse
-      filters: $filters
-    ) {
-      edges {
-        node {
-          id
-          title
-          vendor
-          handle
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-          compareAtPriceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-          images(first: 2) {
-            edges {
-              node {
-                url
-                altText
-              }
-            }
-          }
-          featuredImage {
-            url
-          }
-          options {
-            name
-            optionValues {
-              id
-              name
-              swatch {
-                color
-              }
-            }
-          }
-          variants(first: 100) {
-            edges {
-              node {
-                id
-                availableForSale
-                compareAtPrice {
-                  amount
-                  currencyCode
-                }
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-              }
-            }
-          }
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-        endCursor
-        hasPreviousPage
-        startCursor
-      }
-    }
-  }
-}
-    `;
-
-export const useGetCollectionByIdQuery = <
-  TData = GetCollectionByIdQuery,
-  TError = unknown
->(
-  variables: GetCollectionByIdQueryVariables,
-  options?: UseQueryOptions<GetCollectionByIdQuery, TError, TData>
-) => {
-  return useQuery<GetCollectionByIdQuery, TError, TData>(
-    ["GetCollectionById", variables],
-    fetcher<GetCollectionByIdQuery, GetCollectionByIdQueryVariables>(
-      GetCollectionByIdDocument,
-      variables
-    ),
-    options
-  );
-};
-
-export const GetProductsByIdsDocument = `
-    query GetProductsByIds($ids: [ID!]!) {
-  nodes(ids: $ids) {
-    ... on Product {
-      id
-      title
-      handle
-      priceRange {
-        minVariantPrice {
-          amount
-          currencyCode
-        }
-      }
-      compareAtPriceRange {
-        minVariantPrice {
-          amount
-          currencyCode
-        }
-      }
-      images(first: 1) {
-        edges {
-          node {
-            url
-            altText
-          }
-        }
-      }
-      featuredImage {
-        url
-      }
-      options {
-        name
-        optionValues {
-          id
-          name
-          swatch {
-            color
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-
-export const useGetProductsByIdsQuery = <
-  TData = GetProductsByIdsQuery,
-  TError = unknown
->(
-  variables: GetProductsByIdsQueryVariables,
-  options?: UseQueryOptions<GetProductsByIdsQuery, TError, TData>
-) => {
-  return useQuery<GetProductsByIdsQuery, TError, TData>(
-    ["GetProductsByIds", variables],
-    fetcher<GetProductsByIdsQuery, GetProductsByIdsQueryVariables>(
-      GetProductsByIdsDocument,
       variables
     ),
     options

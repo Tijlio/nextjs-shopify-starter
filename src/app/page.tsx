@@ -1,3 +1,9 @@
+import AllCollections from "@/components/view/AllCollections";
+
 export default function Home() {
-  return <div></div>;
+  return (
+    <div>
+      <AllCollections />
+    </div>
+  );
 }

@@ -5,21 +5,23 @@ import Logo from "../Logo";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
   return (
     <div className="flex items-center justify-between">
       <Logo />
       <div className="flex items-center gap-x-4">
         <Link
           className="text-sm font-medium transition-all hover:underline"
-          href="/men"
+          href="/collections/men"
         >
           Men
         </Link>
         <Link
           className="text-sm font-medium transition-all hover:underline"
-          href="/women"
+          href="/collections/women"
         >
           Women
         </Link>
@@ -28,7 +30,9 @@ const Navbar = () => {
         <Button size="icon" variant="ghost">
           <ShoppingBag />
         </Button>
-        <Button size="sm">Login</Button>
+        <Button onClick={() => router.push("/auth")} size="sm">
+          Login
+        </Button>
       </div>
     </div>
   );
