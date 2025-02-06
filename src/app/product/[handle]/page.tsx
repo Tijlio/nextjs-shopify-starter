@@ -16,9 +16,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ProductPrice from "@/components/view/ProductCard/ProductPrice";
 import { Button } from "@/components/ui/button";
 import ProductOptions from "@/components/view/ProductOptions";
+import { useCartActions } from "@/lib/atoms/cart";
 
 const Product = () => {
   const params = useParams();
+  const { addItem } = useCartActions();
 
   // States
   const [selectedOptions, setSelectedOptions] = useState<
@@ -54,6 +56,12 @@ const Product = () => {
       </div>
     );
 
+  const handleAddtoCart = () => {
+    if (selectedVariant) {
+      addItem(selectedVariant.id, 1);
+    }
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 my-10">
       <ProductCarousel images={data?.product?.images?.edges as ImageEdge[]} />
@@ -68,7 +76,9 @@ const Product = () => {
         <ProductPrice
           priceRange={data?.product?.priceRange as ProductPriceRange}
         />
-        <Button disabled={!selectedVariant}>Add to Cart</Button>
+        <Button disabled={!selectedVariant} onClick={handleAddtoCart}>
+          Add to Cart
+        </Button>
       </div>
     </div>
   );
