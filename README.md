@@ -1,3 +1,5 @@
+![Your paragraph text](https://github.com/user-attachments/assets/f18f0d02-5a57-42ee-b801-0538ef96e69f)
+
 # Next.js Shopify Starter
 
 🚀 A modern, scalable Next.js e-commerce storefront built with Shopify's Storefront API, TypeScript, TailwindCSS, and TanStack Query.
